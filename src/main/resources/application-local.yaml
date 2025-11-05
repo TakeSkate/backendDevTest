@@ -1,0 +1,17 @@
+external:
+  existing-apis:
+    base-url: http://localhost:3001
+    http-timeout: 1000ms
+
+
+
+logging:
+  level:
+    root: DEBUG
+    org.springframework.web: DEBUG
+    es.jgarci.similarproducts: DEBUG
+
+
+similar-products:
+  concurrency: 8
+  timeout: 2s

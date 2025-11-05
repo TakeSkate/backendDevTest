@@ -1,3 +1,57 @@
+# Server
+server:
+  port: 5000
+
+# Spring
 spring:
+  main:
+    banner-mode: off
   application:
     name: similar-products
+  profiles:
+    default: prod
+
+# Actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+
+# External services / APIs
+external:
+  existing-apis:
+    base-url: http://localhost:3001
+    http-timeout: 1000ms
+
+
+# Resilience4j /Retry / Circuit Breaker / Exceptions
+resilience4j:
+  retry:
+    instances:
+      upstream:
+        max-attempts: 3
+        wait-duration: 150ms
+        retry-exceptions:
+          - org.springframework.web.reactive.function.client.WebClientRequestException   # timeouts / network
+          - es.jgarci.similarproducts.domain.exceptions.UpstreamException                  # Throw 5xx errors
+        ignore-exceptions:
+          - es.jgarci.similarproducts.domain.exceptions.NotFoundException                  # Ignore 404 errors
+  circuitbreaker:
+    instances:
+      upstream:
+        sliding-window-type: COUNT_BASED
+        sliding-window-size: 20
+        minimum-number-of-calls: 10
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 5s
+
+
+# Swagger
+springdoc:
+  swagger-ui:
+    url: /openapi/similarProducts.yaml

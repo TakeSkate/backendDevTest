@@ -1,0 +1,13 @@
+external:
+  existing-apis:
+    base-url: ${external.existing-apis.base-url}
+    http-timeout: 800ms
+
+logging:
+  level:
+    root: INFO
+
+
+similarproducts:
+  concurrency: 10
+  timeout: 1s

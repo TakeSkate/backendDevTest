@@ -1,0 +1,15 @@
+external:
+  existing-apis:
+    base-url: http://localhost:${wiremock.port:8089}
+    http-timeout: 2000ms
+
+
+logging:
+  level:
+    root: DEBUG
+    org.springframework.web: DEBUG
+    es.jgarci.similarproducts: DEBUG
+
+similar-products:
+  concurrency: 8
+  timeout: 1s
